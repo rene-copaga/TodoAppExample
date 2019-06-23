@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import {View, Button, FlatList, CheckBox, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Button, FlatList, CheckBox, Text, TouchableOpacity, StyleSheet, AsyncStorage} from 'react-native'
+
+const key = 'todos'
 
 class Home extends Component {
 
@@ -23,12 +25,18 @@ class Home extends Component {
           }
         })
         this.setState({todos})
+        AsyncStorage.setItem(key, JSON.stringify(todos))
+            .then(() => console.log('storage updated!'))
+            .catch(e => console.log('e: ', e))
     }
 
     addTodo (title, description) {
         let todos = this.state.todos
         todos.push({title: title, description: description, complete: false, index: new Date().getMilliseconds()})
         this.setState({todos})
+        AsyncStorage.setItem(key, JSON.stringify(todos))
+            .then(() => console.log('storage updated!'))
+            .catch(e => console.log('e: ', e))
     }
 
     editTodo (index, title, description) {
@@ -40,6 +48,9 @@ class Home extends Component {
             }
         })
         this.setState({todos})
+        AsyncStorage.setItem(key, JSON.stringify(todos))
+            .then(() => console.log('storage updated!'))
+            .catch(e => console.log('e: ', e))
     }
 
     deleteTodo (index) {
@@ -48,6 +59,9 @@ class Home extends Component {
             return todo.index !== index
         })
         this.setState({todos})
+        AsyncStorage.setItem(key, JSON.stringify(todos))
+            .then(() => console.log('storage updated!'))
+            .catch(e => console.log('e: ', e))
     }
 
     FlatListItemSeparator = () => {
